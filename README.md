@@ -1,4 +1,3 @@
-
 # CMPE 283 Assignments
 
 ## Assignment 1
