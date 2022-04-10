@@ -34,10 +34,10 @@ The 5 features queried are:
     git clone https://github.com/parmeet54/linux.git
     ```
 
-    - Upload assignment files and move to cmpe283 folder
+   - Upload assignment files and move to cmpe283 folder
     <br/>
 
-    c. Install all the dependencies and packages required for building kernel and other functions
+   c. Install all the dependencies and packages required for building kernel and other functions
 
     ```
         sudo apt-get update
@@ -62,93 +62,93 @@ The 5 features queried are:
 
         sudo apt install dwarves
     ```
-    <br/>
+<br/>
 
-    d. Make a new configuration file:
-
-
-    - Copy the config to a new .config file:
-
-    ```   
-       cp/boot/config-5.11.0-1029-gcp .config
-
-    ```
-
-    - Disable the system keys to avoid build errors:
-
-    ```   
-        scripts/config --disable SYSTEM_TRUSTED_KEYS
-
-        scripts/config --disable SYSTEM_REVOCATION_KEYS
-
-    ```
-
-    - Renew the configuration
-
-    ```
-        make oldconfig
-    ```
-
-    - Finalize the config
-    ```
-        make prepare
-    ```
-    <br/>
+   d. Make a new configuration file:
 
 
-    e. Build kernel
+- Copy the config to a new .config file:
 
-    - Build all the modules
-    ```
-        make -j 8 modules
-    ```
+```   
+   cp/boot/config-5.11.0-1029-gcp .config
+
+```
+
+- Disable the system keys to avoid build errors:
+
+```   
+    scripts/config --disable SYSTEM_TRUSTED_KEYS
+
+    scripts/config --disable SYSTEM_REVOCATION_KEYS
+
+```
+
+- Renew the configuration
+
+```
+    make oldconfig
+```
+
+- Finalize the config
+```
+    make prepare
+```
+<br/>
 
 
-    - Build the kernel
-    ```
-        make -j 8
-    ```
+e. Build kernel
 
-    - Package kernel and modules for booting
-    ```
-        sudo make INSTALL_MOD_STRIP=1 modules_install
-    ```
+- Build all the modules
+```
+    make -j 8 modules
+```
 
-    - Install kernel
-    ```
-        Sudo make install
-    ```
 
-    - Reboot to update bootloader to choose the correct kernel
-    ```
-        sudo reboot 
-    ```
-    <br/>
+- Build the kernel
+```
+    make -j 8
+```
 
-    f. Make the assignment module and review Output
+- Package kernel and modules for booting
+```
+    sudo make INSTALL_MOD_STRIP=1 modules_install
+```
 
-    - Change Directory
-    ```
-        cd linux/cmpe283
-    ```
+- Install kernel
+```
+    Sudo make install
+```
 
-    - **Make** the makefile provided for assignment
-    ```
-        make
-    ```
-    - We build the following files as a result
+- Reboot to update bootloader to choose the correct kernel
+```
+    sudo reboot 
+```
+<br/>
+
+f. Make the assignment module and review Output
+
+- Change Directory
+```
+    cd linux/cmpe283
+```
+
+- **Make** the makefile provided for assignment
+```
+    make
+```
+- We build the following files as a result
 
 ![Build Files](/cmpe283/images/ assg1-files.png)
 
-    - Load the kernel object into kernel
+- Load the kernel object into kernel
 
-    ```
-        sudo insmod cmpe283-1.ko
-    ```
-    - Display the output messages
-    ```
-        dmesg
-    ```
+```
+    sudo insmod cmpe283-1.ko
+```
+- Display the output messages
+```
+    dmesg
+```
 
 ![Output 1](/cmpe283/images/assg1-output1.png)
 ![Output 2](/cmpe283/images/assg1-output2.png)
