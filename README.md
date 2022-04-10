@@ -20,13 +20,14 @@ The 5 features queried are:
 
 2. Steps to complete the assignment
 
-a. Setup a VM in GCP using the following commnand:
+    a. Setup a VM in GCP using the following commnand:
 
 ```
 gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
 
 ```
 
+<br/>
 b. Git Clone the forked linux repository:
 
 ```
