@@ -20,51 +20,51 @@ The 5 features queried are:
 
 2. Steps to complete the assignment
 
-    a. Setup a VM in GCP using the following commnand:
+a. Setup a VM in GCP using the following commnand:
 
-    ```
-    gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-   tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-     focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
+```
+gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-   tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-     focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
 
-    ```
+```
 
 <br/>
-    b. Git Clone the forked linux repository:
+b. Git Clone the forked linux repository:
 
-    ```
-    git clone https://github.com/parmeet54/linux.git
-    ```
+```
+git clone https://github.com/parmeet54/linux.git
+```
 
-   - Upload assignment files and move to cmpe283 folder
+- Upload assignment files and move to cmpe283 folder
     <br/>
 
-   c. Install all the dependencies and packages required for building kernel and other functions
+c. Install all the dependencies and packages required for building kernel and other functions
 
-    ```
-        sudo apt-get update
+```
+    sudo apt-get update
 
-        sudo apt install gcc
+    sudo apt install gcc
 
-        sudo apt install make
+    sudo apt install make
 
-        sudo apt-get install libncurses-dev
+    sudo apt-get install libncurses-dev
 
-        sudo apt-get install libssl-dev
+    sudo apt-get install libssl-dev
 
-        sudo apt install libelf-dev
+    sudo apt install libelf-dev
 
-        sudo apt install make
+    sudo apt install make
 
-        sudo apt-get install gcc
+    sudo apt-get install gcc
 
-        sudo apt-get install flex
+    sudo apt-get install flex
 
-        sudo apt-get install bison
+    sudo apt-get install bison
 
-        sudo apt install dwarves
-    ```
+    sudo apt install dwarves
+```
 <br/>
 
-   d. Make a new configuration file:
+d. Make a new configuration file:
 
 
 - Copy the config to a new .config file:
@@ -138,7 +138,7 @@ f. Make the assignment module and review Output
 ```
 - We build the following files as a result
 
-![Build Files](/cmpe283/images/ assg1-files.png)
+![Build Files](/cmpe283/images/assg1-files.png)
 
 - Load the kernel object into kernel
 
