@@ -35,7 +35,7 @@ git clone https://github.com/parmeet54/linux.git
 ```
 
 - Upload assignment files and move to cmpe283 folder
-    <br/>
+<br/>
 
 c. Install all the dependencies and packages required for building kernel and other functions
 
@@ -138,7 +138,7 @@ f. Make the assignment module and review Output
 ```
 - We build the following files as a result
 
-![Build Files](/cmpe283/images/assg1-files.png)
+![Build Files](/cmpe283/images/%20assg1-files.png)
 
 - Load the kernel object into kernel
 
