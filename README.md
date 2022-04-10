@@ -3,6 +3,8 @@
 ## Assignment 1
 #### by Parmeet Singh
 
+**note: makefile and cmpe281-1.c were retrieved from https://github.com/mlarkin2015/linux/tree/master/cmpe283 , as by the time of the submission the files were not available through canvas.**
+
 In this assignment, we write a build kernel module that queries the VMX features present in our CPU.
 
 The 5 features queried are:
