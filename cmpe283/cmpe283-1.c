@@ -63,7 +63,7 @@ struct capability_info procbased[22] =
 	{ 12, "RDTSC exiting" },
 	{ 15, "CR3-load exiting" },
 	{ 16, "CR3-store exiting" },
-	{ 17, "Activate tertiary controls"}
+	{ 17, "Activate tertiary controls"},
 	{ 19, "CR8-load exiting" },
 	{ 20, "CR8-store exiting" },
 	{ 21, "Use TPR shadow" },
@@ -119,7 +119,7 @@ struct capability_info secprocbased[27] =
  * Exit capabilities
  * See SDM volume 3, section 24.7.1
  */
-struct capability_info exit[16] =
+struct capability_info ext[16] =
 {
 	{ 2, "Save debug controls"},
 	{ 9, "Host address-space size"},
@@ -228,7 +228,7 @@ detect_vmx_features(void)
 	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
 	pr_info("Exit Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(exit, 16, lo, hi);
+	report_capability(ext, 16, lo, hi);
 
 	
 	/* Entry controls */
