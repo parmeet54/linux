@@ -22,20 +22,20 @@ The 5 features queried are:
 
     a. Setup a VM in GCP using the following commnand:
 
-```
-gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
+    ```
+    gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-   tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-     focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
 
-```
+    ```
 
 <br/>
-b. Git Clone the forked linux repository:
+    b. Git Clone the forked linux repository:
 
-```
-git clone https://github.com/parmeet54/linux.git
-```
+    ```
+    git clone https://github.com/parmeet54/linux.git
+    ```
 
 - Upload assignment files and move to cmpe283 folder
-
+<br/>
 
 c. Install all the dependencies and packages required for building kernel and other functions
 
@@ -62,6 +62,7 @@ c. Install all the dependencies and packages required for building kernel and ot
 
     sudo apt install dwarves
 ```
+<br/>
 
 d. Make a new configuration file:
 
@@ -92,6 +93,7 @@ d. Make a new configuration file:
 ```
     make prepare
 ```
+<br/>
 
 
 e. Build kernel
@@ -121,6 +123,7 @@ e. Build kernel
 ```
     sudo reboot 
 ```
+<br/>
 
 f. Make the assignment module and review Output
 
