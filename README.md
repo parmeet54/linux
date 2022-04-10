@@ -24,7 +24,6 @@ a. Setup a VM in GCP using the following commnand:
 
 ```
 gcloud compute instances create cmpe283-vm --enable-nested-virtualization --zone=us-west1-b --machine-type=n2-standard-8 --network-interface=network-   tier=PREMIUM,subnet=default --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/ubuntu-os-cloud/global/images/ubuntu-2004-     focal-v20220204,mode=rw,size=200,type=projects/sjsu-spring-2022/zones/us-central1-a/diskTypes/pd-ssd --metadata=ssh-keys=mlarkin:"...paste ssh key here..."
-
 ```
 
 <br/>
@@ -71,7 +70,6 @@ d. Make a new configuration file:
 
 ```   
    cp/boot/config-5.11.0-1029-gcp .config
-
 ```
 
 - Disable the system keys to avoid build errors:
@@ -80,7 +78,6 @@ d. Make a new configuration file:
     scripts/config --disable SYSTEM_TRUSTED_KEYS
 
     scripts/config --disable SYSTEM_REVOCATION_KEYS
-
 ```
 
 - Renew the configuration
