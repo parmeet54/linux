@@ -8,7 +8,6 @@
  * Copyright 2011 Red Hat, Inc. and/or its affiliates.
  * Copyright IBM Corporation, 2008
  */
-
 #include <linux/kvm_host.h>
 #include <linux/export.h>
 #include <linux/vmalloc.h>
@@ -1438,10 +1437,16 @@ bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
 }
 EXPORT_SYMBOL_GPL(kvm_cpuid);
 
+
+extern uint64_t cycles;
+extern u32 total_exits;
+
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
+
 	u32 eax, ebx, ecx, edx;
-	extern u32 total_exits;
+//	extern u32 total_exits;
+//	extern uint64_t cycles;
 
 	if (cpuid_fault_enabled(vcpu) && !kvm_require_cpl(vcpu, 0))
 		return 1;
@@ -1449,9 +1454,31 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	eax = kvm_rax_read(vcpu);
 	ecx = kvm_rcx_read(vcpu);
 	
-	if(eax  == 0x4ffffffff) {
+	if(eax  == 0x4FFFFFFF) {
+
 		eax = total_exits;
-	} else{
+		printk("CPUID: 0x4FFFFFFF: total exits:%u", eax);
+		
+	}
+	else if (eax == 0x4FFFFFFE){
+		
+		uint32_t lo;
+		uint32_t hi;
+
+		lo  = cycles;
+
+		hi  = (cycles >> 32);
+
+		ebx = lo;
+		ecx = hi;
+
+
+		printk("Time Spent in ALL Exits: Lo:%u", ebx );
+		printk("Time Spent in ALL Exits: Hi:%u", ecx );
+
+	}
+
+	else{
 		kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
 	}
 

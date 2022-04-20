@@ -6007,6 +6007,10 @@ void dump_vmcs(struct kvm_vcpu *vcpu)
 }
 
 u32 total_exits;
+EXPORT_SYMBOL(total_exits);
+
+uint64_t cycles;
+EXPORT_SYMBOL(cycles);
 
 /*
  * The guest has exited.  See if we can fix it or if we need userspace
@@ -6014,13 +6018,20 @@ u32 total_exits;
  */
 static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
+	
 	struct vcpu_vmx *vmx = to_vmx(vcpu);
 	union vmx_exit_reason exit_reason = vmx->exit_reason;
 	u32 vectoring_info = vmx->idt_vectoring_info;
-	u16 exit_handler_index;
+	u16 exit_handler_index;	
+	uint64_t begin;
+	uint64_t end;
+
 
 	total_exits++;
-			
+		
+	begin = rdtsc();
+
+
 	/*
 	 * Flush logged GPAs PML buffer, this will make dirty_bitmap more
 	 * updated. Another good is, in kvm_vm_ioctl_get_dirty_log, before
@@ -6187,6 +6198,13 @@ unexpected_vmexit:
 	vcpu->run->internal.suberror =
 			KVM_INTERNAL_ERROR_UNEXPECTED_EXIT_REASON;
 	vcpu->run->internal.ndata = 2;
+
+
+	end = rdtsc();
+	
+	cycles = end - begin;
+
+
 	vcpu->run->internal.data[0] = exit_reason.full;
 	vcpu->run->internal.data[1] = vcpu->arch.last_vmentry_cpu;
 	return 0;
