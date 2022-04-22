@@ -6006,11 +6006,14 @@ void dump_vmcs(struct kvm_vcpu *vcpu)
 		       vmcs_read16(VIRTUAL_PROCESSOR_ID));
 }
 
-u32 total_exits;
-EXPORT_SYMBOL(total_exits);
+//u32 total_exits;
+//EXPORT_SYMBOL(total_exits);
 
-uint64_t cycles;
-EXPORT_SYMBOL(cycles);
+//uint64_t cycles;
+//EXPORT_SYMBOL(cycles);
+
+extern u32 total_exits;
+extern uint64_t cycles;
 
 /*
  * The guest has exited.  See if we can fix it or if we need userspace
@@ -6209,6 +6212,7 @@ unexpected_vmexit:
 	vcpu->run->internal.data[1] = vcpu->arch.last_vmentry_cpu;
 	return 0;
 }
+
 
 static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
