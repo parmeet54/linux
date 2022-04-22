@@ -213,7 +213,7 @@ Steps used to complete the assignment:
 11. Created an Inner VM using ​​virt-install 
 ```
 virt-install \
---name falcon-1 \
+--name cmpe283 \
 --ram 1024 \
 --disk path=/var/lib/libvirt/images/falcon1.img,size=8 \
 --vcpus 1 \
