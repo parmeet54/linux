@@ -1,5 +1,7 @@
 # CMPE 283 Assignments
 
+NOTE: Assignments 2,3 and 4 were completed as a team (Parmeet Singh and Ashwin Ramaswamy). The Questions are below assignment 1.
+
 ## Assignment 1
 #### by Parmeet Singh
 
