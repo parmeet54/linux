@@ -158,7 +158,7 @@ f. Make the assignment module and review Output
 
 ## Assignment 2
 by:
-Parmeet Singh
+Parmeet Singh, 
 Ashwin Ramaswamy
 
 
@@ -184,19 +184,19 @@ Steps used to complete the assignment:
 2. Edited the cpuid.c and vmx.c files
 - Added 2 cpuid leaf nodes for 0x4FFFFFFF and 0x4FFFFFFE
 
-In cpuid.c we created a u32 variable “total_exits” to store a global counter for the number of exits handled. Then we added the line “EXPORT_SYMBOL(total_exits);”
+3. In cpuid.c we created a u32 variable “total_exits” to store a global counter for the number of exits handled. Then we added the line “EXPORT_SYMBOL(total_exits);”
 
-3. In vmx.c the variable “total_exits” was incremented upon each function call of __vmx_handle_exits. This allowed us to have a counter for each time any exit was called. We then used the “extern” argument to reference “total_exits” from cpuid.c.
+4. In vmx.c the variable “total_exits” was incremented upon each function call of __vmx_handle_exits. This allowed us to have a counter for each time any exit was called. We then used the “extern” argument to reference “total_exits” from cpuid.c.
 
-4. Checked if %eax == 0x4fffffff, and then set %eax to total_exits, available for view.
+5. Checked if %eax == 0x4fffffff, and then set %eax to total_exits, available for view.
 
-5. Created a uint64_t variable “cycles” in cpuid.c to store the total number of cycles as the duration of an exit handle.
+6. Created a uint64_t variable “cycles” in cpuid.c to store the total number of cycles as the duration of an exit handle.
 
-6. Utilized the rdtsc() function to set begin and end times when processing the duration of an exit handle. The end of __vmx_handle_exit() returns the difference of begin and end.
+7. Utilized the rdtsc() function to set begin and end times when processing the duration of an exit handle. The end of __vmx_handle_exit() returns the difference of begin and end.
 
-7. Checked if %eax == 0x4ffffffe, and then set %ebx to the low 32 bits of “cycles” and %ecx to the high 32 bits of “cycles”.
+8. Checked if %eax == 0x4ffffffe, and then set %ebx to the low 32 bits of “cycles” and %ecx to the high 32 bits of “cycles”.
 
-8. Installed the necessary libraries needed for Nested Virtualization
+9. Installed the necessary libraries needed for Nested Virtualization
 ```
     sudo apt-get install qemu-kvm 
     Sudo apt-get install libvirt-bin 
@@ -205,9 +205,9 @@ In cpuid.c we created a u32 variable “total_exits” to store a global counter
     Sudo apt-get install bridge-utils 
 ```
 
-9. Download ubuntu iso image onto the main GCP VM.
+10. Download ubuntu iso image onto the main GCP VM.
 
-10. Created an Inner VM using ​​virt-install 
+11. Created an Inner VM using ​​virt-install 
 ```
 virt-install \
 --name falcon-1 \
@@ -222,8 +222,8 @@ virt-install \
 --extra-args "console=tty0 console=ttyS0,115200n8"
 ```
 
-11. Install CPUID package for testing
+12. Install CPUID package for testing
 
-12. Test cpuid leaf nodes inside inner VM using cpuid package
+13. Test cpuid leaf nodes inside inner VM using cpuid package
 - Total exits using: cpuid -l 0x4FFFFFFF
 - Cpu cycles using: cpuid -l 0x4FFFFFFE
