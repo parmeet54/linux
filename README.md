@@ -154,7 +154,8 @@ f. Make the assignment module and review Output
 
 
 
-
+<br/>
+<br/>
 
 ## Assignment 2
 by:
@@ -216,7 +217,7 @@ virt-install \
 --vcpus 1 \
 --virt-type kvm \
 --os-type linux \
---os-variant ubuntu18.04 \
+--os-variant ubuntu20.04 \
 --graphics none \
 --location (---path of iso here—--) \
 --extra-args "console=tty0 console=ttyS0,115200n8"
