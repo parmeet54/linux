@@ -208,9 +208,7 @@ Steps used to complete the assignment:
     Sudo apt-get install bridge-utils 
 ```
 
-10. Download ubuntu iso image onto the main GCP VM.
-
-11. Created an Inner VM using ​​virt-install 
+10. Created an Inner VM using ​​virt-install 
 ```
 virt-install \
 --name cmpe283 \
@@ -225,8 +223,8 @@ virt-install \
 --extra-args "console=tty0 console=ttyS0,115200n8"
 ```
 
-12. Install CPUID package for testing
+11. Install CPUID package for testing
 
-13. Test cpuid leaf nodes inside inner VM using cpuid package
+12. Test cpuid leaf nodes inside inner VM using cpuid package
 - Total exits using: cpuid -l 0x4FFFFFFF
 - Cpu cycles using: cpuid -l 0x4FFFFFFE
