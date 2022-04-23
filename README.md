@@ -173,7 +173,7 @@ Parmeet:
 
 
 Ashwin:
-- Both of us worked together to configure the appropriate VM environment on GCP. My role in this assignment was to mainly focus on encoding cpuid.c and vmx.c to implement the correct code and ensure that the registers output the correct value based on the inputs. Primarily, this involved adding the leaf nodes of 0x4fffffff and 0x4ffffffe. Then in order to calculate the number of exits, we decided to implement a counter to calculate each call of any exit. Then, generated code to calculate the duration of exits that is called in cpuid.c
+- Both of us worked together to configure the appropriate nested VM environment. My role in this assignment was to mainly focus on encoding cpuid.c and vmx.c to implement the correct code and ensure that the registers output the correct value based on the inputs. Primarily, this involved adding the leaf nodes of 0x4fffffff and 0x4ffffffe. Then in order to calculate the number of exits, we decided to implement a counter to calculate each call of any exit. Then, generated code to calculate the duration of exits that is called in cpuid.c
 	
 ### Question 2:
 Steps used to complete the assignment:
