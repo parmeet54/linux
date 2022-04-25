@@ -201,11 +201,11 @@ Steps used to complete the assignment:
 
 9. Installed the necessary libraries needed for Nested Virtualization
 ```
-    sudo apt-get install qemu-kvm 
     Sudo apt-get install libvirt-bin 
     Sudo apt-get install cpu-checker
-    Sudo apt-get install virtinst 
-    Sudo apt-get install bridge-utils 
+    
+    sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-system virtinst bridge-utils
+
 ```
 
 10. Created an Inner VM using ​​virt-install 
