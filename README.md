@@ -1,5 +1,7 @@
 # CMPE 283 Assignments
 
+NOTE: Assignments 2,3 and 4 were completed as a team (Parmeet Singh and Ashwin Ramaswamy). The Questions are below assignment 1.
+
 ## Assignment 1
 #### by Parmeet Singh
 
@@ -151,3 +153,78 @@ f. Make the assignment module and review Output
 
 ![Output 1](/cmpe283/images/assg1-output1.png)
 ![Output 2](/cmpe283/images/assg1-output2.png)
+
+
+
+<br/>
+<br/>
+
+## Assignment 2
+by:
+Parmeet Singh, 
+Ashwin Ramaswamy
+
+
+### Question 1.
+					
+Parmeet:
+
+- Both members configured the VM for the assignment before editing the code. I handled the building kernel and installing modules. Researched about nested virtualization and how to use it for our assignment testing. Installed all the necessary libraries such as virtint etc. to handle the inner VM. Performed testing using cpuid package.
+
+
+Ashwin:
+- Both of us worked together to configure the appropriate nested VM environment. My role in this assignment was to mainly focus on encoding cpuid.c and vmx.c to implement the correct code and ensure that the registers output the correct value based on the inputs. Primarily, this involved adding the leaf nodes of 0x4fffffff and 0x4ffffffe. Then in order to calculate the number of exits, we decided to implement a counter to calculate each call of any exit. Then, generated code to calculate the duration of exits that is called in cpuid.c
+	
+### Question 2:
+Steps used to complete the assignment:
+		
+1. Made sure the VM was configured from assignment one.
+- Git clone linux repo
+- Fix new config file
+- Build entire kernel and make modules
+- Install the kernel
+
+2. Edited the cpuid.c and vmx.c files
+- Added 2 cpuid leaf nodes for 0x4FFFFFFF and 0x4FFFFFFE
+
+3. In cpuid.c we created a u32 variable “total_exits” to store a global counter for the number of exits handled. Then we added the line “EXPORT_SYMBOL(total_exits);”
+
+4. In vmx.c the variable “total_exits” was incremented upon each function call of __vmx_handle_exits. This allowed us to have a counter for each time any exit was called. We then used the “extern” argument to reference “total_exits” from cpuid.c.
+
+5. Checked if %eax == 0x4fffffff, and then set %eax to total_exits, available for view.
+
+6. Created a uint64_t variable “cycles” in cpuid.c to store the total number of cycles as the duration of an exit handle.
+
+7. Utilized the rdtsc() function to set begin and end times when processing the duration of an exit handle. The end of __vmx_handle_exit() returns the difference of begin and end.
+
+8. Checked if %eax == 0x4ffffffe, and then set %ebx to the low 32 bits of “cycles” and %ecx to the high 32 bits of “cycles”.
+
+9. Installed the necessary libraries needed for Nested Virtualization
+```
+    Sudo apt-get install libvirt-bin 
+    Sudo apt-get install cpu-checker
+    
+    sudo apt install qemu qemu-kvm libvirt-clients libvirt-daemon-system virtinst bridge-utils
+
+```
+
+10. Created an Inner VM using ​​virt-install 
+```
+virt-install \
+--name cmpe283 \
+--ram 1024 \
+--disk path=/var/lib/libvirt/images/cmpe283.img,size=8 \
+--vcpus 1 \
+--virt-type kvm \
+--os-type linux \
+--os-variant ubuntu18.04 \
+--graphics none \
+--location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+--extra-args "console=tty0 console=ttyS0,115200n8"
+```
+
+11. Install CPUID package for testing
+
+12. Test cpuid leaf nodes inside inner VM using cpuid package
+- Total exits using: cpuid -l 0x4FFFFFFF
+- Cpu cycles using: cpuid -l 0x4FFFFFFE
