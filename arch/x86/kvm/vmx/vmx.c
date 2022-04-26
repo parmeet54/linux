@@ -6014,6 +6014,12 @@ void dump_vmcs(struct kvm_vcpu *vcpu)
 
 extern u32 total_exits;
 extern uint64_t cycles;
+//const int size = 70;
+extern uint64_t exit_reason_counts[70];
+
+extern uint64_t exit_reason_times[70];
+
+
 
 /*
  * The guest has exited.  See if we can fix it or if we need userspace
@@ -6029,10 +6035,11 @@ static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 	uint64_t begin;
 	uint64_t end;
 
-
 	total_exits++;
-		
+
 	begin = rdtsc();
+
+	exit_reason_counts[exit_reason.basic]++;
 
 
 	/*
@@ -6205,7 +6212,13 @@ unexpected_vmexit:
 
 	end = rdtsc();
 	
+	// Cycle time
 	cycles = end - begin;
+
+
+	// Calculating cycles per exit reason
+	exit_reason_times[exit_reason.basic] = cycles;
+
 
 
 	vcpu->run->internal.data[0] = exit_reason.full;

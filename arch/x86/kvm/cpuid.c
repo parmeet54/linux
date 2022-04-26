@@ -1444,6 +1444,13 @@ EXPORT_SYMBOL(total_exits);
 uint64_t cycles;
 EXPORT_SYMBOL(cycles);
 
+//const int size = 70;
+uint64_t exit_reason_counts[70];
+EXPORT_SYMBOL(exit_reason_counts);
+
+uint64_t exit_reason_times[70];
+EXPORT_SYMBOL(exit_reason_times);
+
 //extern uint64_t cycles;
 //extern u32 total_exits;
 
@@ -1463,7 +1470,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	if(eax  == 0x4FFFFFFF) {
 
 		eax = total_exits;
-		printk("CPUID: 0x4FFFFFFF: total exits:%u", eax);
+		printk(KERN_INFO "CPUID(0x4FFFFFFF): total exits:%u", eax);
 		
 	}
 	else if (eax == 0x4FFFFFFE){
@@ -1475,12 +1482,73 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 
 		hi  = (cycles >> 32);
 
-		ebx = lo;
-		ecx = hi;
+
+		ebx = hi;
+		ecx = lo;
 
 
-		printk("Time Spent in ALL Exits: Lo:%u", ebx );
-		printk("Time Spent in ALL Exits: Hi:%u", ecx );
+		printk(KERN_INFO "CPUID(0x4FFFFFFE): Time Spent in ALL Exits: Hi:%u , Lo:%u", ebx, ecx);
+		//printk("Time Spent in ALL Exits: Lo:%u", ecx );
+
+	}
+	else if (eax == 0x4FFFFFFD){
+		// Checked SDM Appendix C 'VMX basic exit reasons' for exits not defined	
+		if(ecx < 0 || ecx == 35 || ecx ==  38 || ecx == 42 || ecx == 65 || ecx > 69){
+
+			printk(KERN_INFO "CPUID(0x4FFFFFFD): Exit Reason value not defined in the SDM:%u",ecx);
+
+			eax = 0;
+			ebx = 0;
+			ecx = 0;
+			edx = 0xFFFFFFFF;
+
+		}
+		else{
+		
+			u32 reason = ecx;
+			eax = exit_reason_counts[ecx];
+
+			printk(KERN_INFO "CPUID(0x4FFFFFFD): Exit counts for reason number: %u", reason);
+		}
+	
+	}
+	else if(eax == 0x4FFFFFFC){
+		
+		if(ecx < 0 || ecx == 35 || ecx ==  38 || ecx == 42 || ecx == 65 || ecx > 69)
+		{
+		
+			printk(KERN_INFO "CPUID(0x4FFFFFFC): Exit Reason value not defined in the SDM:%u",ecx);
+                        eax = 0;
+                        ebx = 0;
+                        ecx = 0;
+                        edx = 0xFFFFFFFF;
+		}
+		else{
+
+			uint64_t time_per_reason;
+			uint32_t lo;
+                        uint32_t hi;
+			//u32 reason = ecx;
+
+			printk(KERN_INFO "CPUID(0x4FFFFFFC): TIme for Reason number: %u", ecx);
+
+			time_per_reason = exit_reason_times[ecx];
+
+			//uint32_t lo;
+               		//uint32_t hi;
+
+               		lo  = time_per_reason;
+               		hi  = (time_per_reason >> 32);
+
+
+               		ebx = hi;
+                	ecx = lo;
+
+
+               		printk(KERN_INFO "CPUID(0x4FFFFFFC): Time Spent in Exit Reason, Hi:%u , Lo:%u", ebx,  ecx );
+
+		}
+		
 
 	}
 
