@@ -315,7 +315,7 @@ ANS: The frequency of exits varies significantly based on the different types of
 ### Question 4: 
 Of the exit types defined in the SDM, which are the most frequent? Least? 		
 
-ANS:
+ANS: <br/>
 Most frequent exit types:
 Exit # 1: External Interrupt
 Exit # 10: CPUID
