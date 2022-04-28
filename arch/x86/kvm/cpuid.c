@@ -1505,10 +1505,9 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 		}
 		else{
 		
-			u32 reason = ecx;
 			eax = exit_reason_counts[ecx];
 
-			printk(KERN_INFO "CPUID(0x4FFFFFFD): Exit counts for reason number: %u", reason);
+			printk(KERN_INFO "CPUID(0x4FFFFFFD): reason number: %u, exit counts: %u", ecx, eax);
 		}
 	
 	}
@@ -1528,24 +1527,26 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 			uint64_t time_per_reason;
 			uint32_t lo;
                         uint32_t hi;
-			//u32 reason = ecx;
+			
+			u32 reason = ecx;
 
-			printk(KERN_INFO "CPUID(0x4FFFFFFC): TIme for Reason number: %u", ecx);
+			printk(KERN_INFO "CPUID(0x4FFFFFFC): TIme for Reason number: %u", reason);
 
 			time_per_reason = exit_reason_times[ecx];
 
 			//uint32_t lo;
                		//uint32_t hi;
-
+			
+			
                		lo  = time_per_reason;
                		hi  = (time_per_reason >> 32);
 
-
+			
                		ebx = hi;
                 	ecx = lo;
 
 
-               		printk(KERN_INFO "CPUID(0x4FFFFFFC): Time Spent in Exit Reason, Hi:%u , Lo:%u", ebx,  ecx );
+               		printk(KERN_INFO "CPUID(0x4FFFFFFC): Time Spent in Exit Reason:%u,  Hi:%u , Lo:%u", reason, ebx,  ecx);
 
 		}
 		
