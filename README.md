@@ -317,14 +317,14 @@ Of the exit types defined in the SDM, which are the most frequent? Least?
 
 ANS: <br/>
 Most frequent exit types:<br/>
-Exit # 1: External Interrupt<br/>
-Exit # 10: CPUID<br/>
-Exit # 28: Control Register Accesses<br/>
-Exit # 48: EPT Violation<br/>
+- Exit # 1: External Interrupt<br/>
+- Exit # 10: CPUID<br/>
+- Exit # 28: Control Register Accesses<br/>
+- Exit # 48: EPT Violation<br/>
 
 Least Frequent exit types:<br/>
-Exit # 29: MOV DR<br/>
-Exit # 44: APIC Access<br/>
-Exit # 55: XSETBV<br/>
+- Exit # 29: MOV DR<br/>
+- Exit # 44: APIC Access<br/>
+- Exit # 55: XSETBV<br/>
  
 
