@@ -228,3 +228,103 @@ virt-install \
 12. Test cpuid leaf nodes inside inner VM using cpuid package
 - Total exits using: cpuid -l 0x4FFFFFFF
 - Cpu cycles using: cpuid -l 0x4FFFFFFE
+
+<br/>
+
+
+
+## Assignment 3
+by:
+Parmeet Singh, 
+Ashwin Ramaswamy
+
+
+### Question 1.
+					
+Parmeet:
+
+- We made sure our configuration for the VM is carried over from Assignment 2 I handled the building kernel and installing modules. Researched about nested virtualization and how to use it for our assignment testing. Helped on coding as we zoomed my screen for the GCP VM. Installed all the necessary libraries such as virtint etc. to handle the inner VM. Performed testing using cpuid package.
+
+
+Ashwin:
+- Both of us worked together to configure the appropriate VM environment. My role in this assignment was to mainly focus on encoding cpuid.c and vmx.c to implement the correct code and ensure that the registers output the correct value based on the inputs. Primarily, this involved adding the leaf nodes of 0x4ffffffd and 0x4ffffffc. Then in order to calculate the number of exits for a particular exit, we decided to implement a counter to calculate each call of exit stored as a value in an array, indexed by the exit reason. We created a similar array to store the durations for each exit type.
+	
+### Question 2:
+Steps used to complete the assignment:
+		
+1. Made sure the VM was configured from assignment two. (This step was done in assignment one, but mentioning for fulfillment purposes).
+- Git clone linux repo
+- Fix new config file
+- Build entire kernel and make modules
+- Install the kernel
+
+2. Edited the cpuid.c and vmx.c files
+- Added 2 cpuid leaf nodes for 0x4FFFFFFD and 0x4FFFFFFC
+
+3. In cpuid.c we created a uint64_t array variable “exit_reason_counts” to store an array with the index corresponding to the value of the exit. The value stored at each index location represents the local counter for the number of times the particular exit was handled. Another array “exit_reason_times” was added in the exact same manner as the first array, but this instead stores the duration that the exit was processed. Then we added the line “EXPORT_SYMBOL();” for each additional variable added.
+
+4. In vmx.c the the total number of exits for each particular type of exit was referenced and then was incremented upon each function call of __vmx_handle_exits. This allowed us to have a localcounter for each time any exit was called. We then used the “extern” argument to reference all defined variables from cpuid.c.
+
+5. Checked if %eax == 0x4ffffffd, checked SDM Appendix C 'VMX basic exit reasons' for exits not defined, then set %eax to the number of exits for the particular exit reason, available for view.
+
+6. Utilized the rdtsc() function to set begin and end times when processing the duration of an exit handle. The end of __vmx_handle_exit() returns the difference of begin and end. The resulting number of cycles was stored for the specific exit reason.
+
+7. Checked if %eax == 0x4ffffffc. Retrieved the number of cycles duration from “exit_reason_times” and then set %ebx to the low 32 bits of “cycles” and %ecx to the high 32 bits of “cycles”.
+
+8. Installed the necessary libraries needed for Nested Virtualization (Done in Assignment 2)
+
+```
+	Sudo apt-get install libvirt-bin 
+	Sudo apt-get install cpu-checker
+	sudo apt-get install qemu-kvm libvirt-bin virtinst bridge-utils cpu-checker
+```
+
+9. Created an Inner VM using ​​virt-install 
+
+```
+	sudo virt-install \
+	--name cmpe283 \
+	--ram 1024 \
+	--disk path=/var/lib/libvirt/images/falcon1.img,size=8 \
+	--vcpus 1 \
+	--virt-type kvm \
+	--os-type linux \
+	--os-variant ubuntu18.04 \
+	--graphics none \
+	--location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/'
+	 \
+	--extra-args "console=tty0 console=ttyS0,115200n8"
+```
+
+10. Install CPUID package for testing (Done in Assignment 2)
+
+11. Test cpuid leaf nodes inside inner VM using cpuid package
+- Number of exits per exit reason using: cpuid -l 0x4FFFFFFD -s [exit reason number]
+- Time spent executing an exit reason using: cpuid -l 0x4FFFFFFC -s [exit reason number]
+
+- Testing was done for the exit reasons for both the leaf nodes 0x4FFFFFFD and 0x4FFFFFFC using the cpuid package as such:
+	- cpuid -l 0x4FFFFFFD -s <exit_number>
+	- cpuid -l 0x4FFFFFFC -s <exit_number>
+
+
+### Question 3: 
+Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
+
+ANS: The frequency of exits varies significantly based on the different types of exit. While many exit cases occur 0 times, there are certain exits that occur over 10,000 times, like External Interrupt and EPT Violation. Many exits have a relatively stable occurrence as the number of exits increases, for example, after 100,000 exits, many of the exit types have very similar number of exits. After adding up all of the exit outputs, this VM displays a total of 627,978 exits upon a full boot up.				
+
+### Question 4: 
+Of the exit types defined in the SDM, which are the most frequent? Least? 		
+
+ANS:
+Most frequent exit types:
+Exit # 1: External Interrupt
+Exit # 10: CPUID
+Exit # 28: Control Register Accesses
+Exit # 48: EPT Violation
+
+Least Frequent exit types:
+Exit # 29: MOV DR
+Exit # 44: APIC Access
+Exit # 55: XSETBV
+ 
+
