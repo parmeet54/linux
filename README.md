@@ -351,6 +351,7 @@ Include a sample of your print of exit count output from dmesg from “with ept�
 ![Output 1](/cmpe283/images/assg4-ept.png)
 
 <br/>
+
 - without EPT
 
 ![Output 2](/cmpe283/images/assg4-noept.png)
@@ -362,9 +363,10 @@ What did you learn from the count of exits? Was the count what you expected? If 
 
 ANS: The number of exits counts significantly varied upon each boot up of the VM. As explained in HW3 Q3, many exit types yielded no occurrences, while other exit types. For certain exit types such as when accessing control registers increases the number of exits to over 50,000, while exits like “page-modification log full” always remained 0 as expected with no modifications to the page-modification log. We also learned that commonly used operations like CPUID, HLT, External Interrupt, RDTSC, VMREAD, and VMWRITE, among others occur frequently because they are used for basic VMM operations. Specific exit instructions are expectedly less frequent, as they would only occur when specific programs are running and would warrant a specific fault type.
 
-4. What changed between the two runs (ept vs no-ept)? 
+### Question 4.
+What changed between the two runs (ept vs no-ept)? 
 
-ANS:
+ANS: <br/>
 EPT (Nested paging)
 Most exit types returned 0 exits during this step. With EPT on, the host VM allows control over the CR3 register to the guest VM. In nested paging, 2 tables are used for translations, and when the second translation is not found in the VMM table, it causes a nested Page Fault. Due to this architecture, most of the “exits” do not require a proper VM exit and therefore the number of exits in our output is much lower.
 
