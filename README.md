@@ -327,4 +327,47 @@ Least Frequent exit types:<br/>
 - Exit # 44: APIC Access<br/>
 - Exit # 55: XSETBV<br/>
  
+ <br/>
+
+
+
+## Assignment 4
+by:
+Parmeet Singh, 
+Ashwin Ramaswamy
+
+
+### Question 1.
+
+- Ashwin: Both of us were involved with all components of the lab as we collaborated over a shared screen and discussed the implementation together. For this lab, I was responsible for running the assignment 3 code and booting a test VM using KVM. After booting the inner VM, I obtained the counts of the number of exits after repeated CPUID queries to 0x4ffffffd, with different parameters as the input for %ecx.
+
+- Parmeet: We shared my screen over Google Meets. I was responsible for operating the GCP machine we used for all the assignments, as my partner was guiding me through the instructions for the assignment such as removing and reloading the kernel modules for the different ept configurations.
+
+
+### Question 2
+Include a sample of your print of exit count output from dmesg from “with ept” and “without ept”.
+- with EPT
+
+![Output 1](/cmpe283/images/assg4-ept.png)
+
+<br/>
+- without EPT
+![Output 2](/cmpe283/images/assg4-noept.png)
+
+<br/>
+
+### Question 3.
+What did you learn from the count of exits? Was the count what you expected? If not, why not?
+
+ANS: The number of exits counts significantly varied upon each boot up of the VM. As explained in HW3 Q3, many exit types yielded no occurrences, while other exit types. For certain exit types such as when accessing control registers increases the number of exits to over 50,000, while exits like “page-modification log full” always remained 0 as expected with no modifications to the page-modification log. We also learned that commonly used operations like CPUID, HLT, External Interrupt, RDTSC, VMREAD, and VMWRITE, among others occur frequently because they are used for basic VMM operations. Specific exit instructions are expectedly less frequent, as they would only occur when specific programs are running and would warrant a specific fault type.
+
+4. What changed between the two runs (ept vs no-ept)? 
+
+ANS:
+EPT (Nested paging)
+Most exit types returned 0 exits during this step. With EPT on, the host VM allows control over the CR3 register to the guest VM. In nested paging, 2 tables are used for translations, and when the second translation is not found in the VMM table, it causes a nested Page Fault. Due to this architecture, most of the “exits” do not require a proper VM exit and therefore the number of exits in our output is much lower.
+
+No-EPT (Shadow Paging)
+More exits occur with EPT = 0. This is because the guest VM has no control over the CR3 register and has to exit in order to access memory, therefore executing an “exit”.
+ 						
 
